@@ -35,7 +35,7 @@
   in
   {
     # Build darwin flake using:
-    # $ darwin-rebuild build --flake .
+    $ darwin-rebuild build --flake .
     darwinConfigurations."bettrere" = nix-darwin.lib.darwinSystem {
       modules = [ ./configuration.nix ];
       specialArgs = {inherit inputs; };
