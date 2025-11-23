@@ -1,44 +1,34 @@
 {
-  description = "Temoss-custom nix-darwin system flake";
+  description = "setting up my flake";
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nix-darwin.url = "github:nix-darwin/nix-darwin/master";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-  };
+  inputs.home-manager.url = "github:nix-community/home-manager";
+ 
+   outputs = { self, nix-homebrew, home-manager }: {
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs }:
-  let
-    configuration = { pkgs, ... }: {
-      # List packages installed in system profile. To search by name, run:
-      # $ nix-env -qaP | grep wget
-      environment.systemPackages =
-        [ pkgs.vim
-        ];
-
-      # Necessary for using flakes on this system.
-      nix.settings.experimental-features = "nix-command flakes";
-
-      # Enable alternative shell support in nix-darwin.
-      programs.zsh.enable = true;
-
-      # Set Git commit hash for darwin-version.
-      system.configurationRevision = self.rev or self.dirtyRev or null;
-
-      # Used for backwards compatibility, please read the changelog before changing.
-      # $ darwin-rebuild changelog
-      system.stateVersion = 6;
-
-      # The platform the configuration will be used on.
-      nixpkgs.hostPlatform = "aarch64-darwin";
+     packages.aarch64-darwin.hello = nixpkgs.legacyPackages.aarch64-darwin.hello;
     };
-  in
-  {
-    # Build darwin flake using:
-    $ darwin-rebuild build --flake .
-    darwinConfigurations."bettrere" = nix-darwin.lib.darwinSystem {
-      modules = [ ./configuration.nix ];
-      specialArgs = {inherit inputs; };
+   
+  in {
+    darwinConfigurations = let
+      inherit (inputs.nix-darwin.lib) darwinSystem;
+    in {
+      bettrere = darwinSystem {
+        system = "aarch64-darwin";
+ 
+        specialArgs = { inherit inputs; };
+ 
+        modules = [
+          ./hosts/mbp/configuration.nix
+          inputs.home-manager.darwinModules.home-manager
+          {
+            nixpkgs = nixpkgsConfig;
+ 
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.noghartt = import ./home/home.nix;
+          }
+        ];
+      };
     };
   };
 }
