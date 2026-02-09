@@ -1,0 +1,17 @@
+# Nix build results
+result
+result-*
+
+# Direnv
+.direnv/
+.envrc
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Temporary files
+*.swp
+*.swo
+*~
