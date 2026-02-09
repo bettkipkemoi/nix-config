@@ -30,10 +30,11 @@
   ];
 
   # Git configuration
+  # IMPORTANT: Update userName and userEmail with your actual git credentials
   programs.git = {
     enable = true;
-    userName = "Your Name";
-    userEmail = "your.email@example.com";
+    userName = "Your Name";  # TODO: Change this to your name
+    userEmail = "your.email@example.com";  # TODO: Change this to your email
     extraConfig = {
       init.defaultBranch = "main";
       pull.rebase = false;
@@ -45,11 +46,11 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    autosuggestion.enable = true;
+    autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
     
     shellAliases = {
-      ll = "ls -la";
+      ll = "eza -la";
       ls = "eza";
       cat = "bat";
       update = "darwin-rebuild switch --flake ~/.config/nix-config";

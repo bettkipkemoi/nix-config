@@ -49,7 +49,7 @@
       autohide = true;
       orientation = "bottom";
       show-recents = false;
-      tilesize = 48;
+      tilesize = 48;  # Size of dock icons in pixels (default: 64)
       minimize-to-application = true;
       launchanim = false;
     };

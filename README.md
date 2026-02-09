@@ -57,10 +57,10 @@ A complete Nix flakes configuration for macOS using nix-darwin and home-manager.
    cd ~/.config/nix-config
    ```
 
-2. **Update username** in the configuration files:
-   - Edit `flake.nix`: Change `runner` to your macOS username
-   - Edit `home.nix`: Update `home.username` and `home.homeDirectory`
-   - Edit `home.nix`: Update git configuration with your name and email
+2. **Update username and personal information** in the configuration files:
+   - Edit `flake.nix`: Change `runner` to your macOS username (line 22)
+   - Edit `home.nix`: Update `home.username` and `home.homeDirectory` (lines 6-7)
+   - **REQUIRED**: Edit `home.nix`: Update git configuration with your name and email (lines 38-39)
 
 3. **Build and apply the configuration**:
    ```bash
